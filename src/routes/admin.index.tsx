@@ -143,11 +143,32 @@ function AdminDashboard() {
   const loadCategories = useCallback(async () => {
     const { data, error } = await supabase
       .from("shop_categories" as any)
-      .select("id, key, title, sub, badge, img, sort_order")
+      .select("id, key, title, sub, badge, img, sort_order, enabled")
       .order("sort_order", { ascending: true });
     if (error) { console.error("Load categories failed", error); return; }
     setCategories(((data ?? []) as unknown) as ShopCategory[]);
   }, []);
+
+  async function toggleCategoryEnabled(c: ShopCategory) {
+    const next = !c.enabled;
+    const itemCount = items.filter((i) => i.cat === c.key).length;
+    if (!next && itemCount > 0) {
+      if (!confirm(`Disable "${c.title}"? ${itemCount} item(s) in this category will be hidden from customers until you enable it again.`)) return;
+    }
+    setBusy((b) => ({ ...b, [`cat-${c.id}`]: true }));
+    setCategories((arr) => arr.map((x) => x.id === c.id ? { ...x, enabled: next } : x));
+    const { error } = await supabase
+      .from("shop_categories" as any)
+      .update({ enabled: next })
+      .eq("id", c.id);
+    setBusy((b) => ({ ...b, [`cat-${c.id}`]: false }));
+    if (error) {
+      toast.error("Update failed: " + error.message);
+      setCategories((arr) => arr.map((x) => x.id === c.id ? { ...x, enabled: c.enabled } : x));
+      return;
+    }
+    toast.success(next ? `Category "${c.title}" enabled.` : `Category "${c.title}" disabled successfully.`);
+  }
 
   async function deleteCategory(c: ShopCategory) {
     if (!confirm(`Delete category "${c.title}"? Items in this category will stay but won't show on the storefront.`)) return;
