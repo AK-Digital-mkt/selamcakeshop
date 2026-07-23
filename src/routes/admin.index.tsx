@@ -5,6 +5,7 @@ import {
   Boxes, CheckCircle2, XCircle, Tag, Plus, Pencil, Trash2, Upload, X, FolderOpen,
   GripVertical, Camera, Loader2, Settings as SettingsIcon, Send, UserCog,
 } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import "@/components/sweet-bloom/menu-admin.css";
 
