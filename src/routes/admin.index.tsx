@@ -81,6 +81,7 @@ type ShopCategory = {
   badge: string;
   img: string;
   sort_order: number;
+  enabled: boolean;
 };
 
 const FALLBACK_CATEGORIES = [
