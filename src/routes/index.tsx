@@ -106,7 +106,7 @@ function Home() {
               <span className="italic text-[#c04872]">made for you.</span>
             </h1>
             <p className="mt-4 max-w-xl text-sm text-slate-600 sm:text-base">
-              Handcrafted cakes, delicate pastries and sweet everyday treats — freshly baked and beautifully delivered.
+              Cake Arts
             </p>
           </div>
         </div>
