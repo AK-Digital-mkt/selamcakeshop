@@ -116,6 +116,8 @@ function AdminDashboard() {
   const [busy, setBusy] = useState<Record<string, boolean>>({});
   const [filterCat, setFilterCat] = useState<string>("All");
   const [filterAvail, setFilterAvail] = useState<"all" | "in" | "out">("all");
+  const [catStatusFilter, setCatStatusFilter] = useState<"all" | "enabled" | "disabled">("all");
+  const [catSearch, setCatSearch] = useState("");
   const [editing, setEditing] = useState<ShopItem | null>(null);
   // Orders page: date-range filter + row selection for bulk delete
   const [orderRange, setOrderRange] = useState<"daily" | "weekly" | "monthly">("daily");
