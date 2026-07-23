@@ -807,13 +807,15 @@ function AdminDashboard() {
 }
 
 function CategoryCard({
-  cat, itemCount, onEdit, onDelete, onOpen, onImageUpdated,
+  cat, itemCount, busy, onEdit, onDelete, onOpen, onToggleEnabled, onImageUpdated,
 }: {
   cat: ShopCategory;
   itemCount: number;
+  busy: boolean;
   onEdit: () => void;
   onDelete: () => void;
   onOpen: () => void;
+  onToggleEnabled: () => void;
   onImageUpdated: (url: string) => void;
 }) {
   const fileRef = useRef<HTMLInputElement>(null);
