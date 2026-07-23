@@ -76,11 +76,11 @@ function CategoryPage() {
       setLoading(true);
       const { data: c } = await supabase
         .from("shop_categories" as any)
-        .select("id,key,title,sub,img")
+        .select("id,key,title,sub,img,enabled")
         .eq("key", slug)
         .maybeSingle();
       if (!alive) return;
-      if (!c) {
+      if (!c || (c as any).enabled === false) {
         setMissing(true);
         setLoading(false);
         return;
