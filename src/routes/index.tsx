@@ -101,7 +101,7 @@ function Home() {
               <Sparkles className="h-3 w-3" /> Selam Cake &amp; Arts
             </span>
             <h1 className="mt-4 font-serif text-[44px] leading-[1.05] tracking-tight text-[#2a1520] sm:text-6xl md:text-7xl">
-              Where Cakes Become Arts
+              Where Cakes Become Art
             </h1>
             <p className="mt-4 max-w-xl text-sm text-slate-600 sm:text-base">
               Cake Arts
