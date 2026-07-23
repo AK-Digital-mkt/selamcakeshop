@@ -124,7 +124,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             draggable={false}
           />
         </div>
-        <p className="splash-tagline">Baked with Love, Made for You.</p>
+        <p className="splash-tagline">Where Cakes Become Arts</p>
       </div>
     </div>
   );
