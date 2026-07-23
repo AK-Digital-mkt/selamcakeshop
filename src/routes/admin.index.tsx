@@ -569,39 +569,87 @@ function AdminDashboard() {
 
             <section className="ma-card">
               <div className="ma-card-head" style={{ flexWrap: "wrap", gap: 10 }}>
-                <h2>Storefront categories ({categories.length})</h2>
-                <button className="ma-add-btn" type="button" onClick={() => setEditingCat({
-                  id: "", key: "", title: "", sub: "", badge: "", img: "", sort_order: (categories.at(-1)?.sort_order ?? 0) + 10, enabled: true,
-                })}>
-                  <Plus size={16} style={{ marginRight: 4 }} /> New Category
-                </button>
+                <h2>Storefront categories ({categories.filter((c) => {
+                  if (catStatusFilter === "enabled" && !c.enabled) return false;
+                  if (catStatusFilter === "disabled" && c.enabled) return false;
+                  const q = catSearch.trim().toLowerCase();
+                  if (q && !(c.title?.toLowerCase().includes(q) || c.key?.toLowerCase().includes(q) || c.sub?.toLowerCase().includes(q))) return false;
+                  return true;
+                }).length}/{categories.length})</h2>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+                  <input
+                    type="search"
+                    value={catSearch}
+                    onChange={(e) => setCatSearch(e.target.value)}
+                    placeholder="Search categories"
+                    className="ma-status-select"
+                    style={{ minWidth: 180 }}
+                  />
+                  <div style={{ display: "inline-flex", background: "#F6D2E1", borderRadius: 12, padding: 4 }}>
+                    {(["all", "enabled", "disabled"] as const).map((r) => (
+                      <button
+                        key={r}
+                        type="button"
+                        onClick={() => setCatStatusFilter(r)}
+                        style={{
+                          border: 0, cursor: "pointer", padding: "8px 14px", borderRadius: 10,
+                          fontWeight: 700, fontSize: 12.5, textTransform: "capitalize",
+                          background: catStatusFilter === r ? "#88D4B0" : "transparent",
+                          color: catStatusFilter === r ? "#1F3A33" : "#4a5d54",
+                          transition: "background .18s ease",
+                        }}
+                      >
+                        {r === "all" ? "All" : r}
+                      </button>
+                    ))}
+                  </div>
+                  <button className="ma-add-btn" type="button" onClick={() => setEditingCat({
+                    id: "", key: "", title: "", sub: "", badge: "", img: "", sort_order: (categories.at(-1)?.sort_order ?? 0) + 10, enabled: true,
+                  })}>
+                    <Plus size={16} style={{ marginRight: 4 }} /> New Category
+                  </button>
+                </div>
               </div>
               <div style={{ padding: 20 }}>
                 {categories.length === 0 ? (
                   <div className="ma-empty-state">No categories yet. Add one to start showing items on the storefront.</div>
-                ) : (
-                  <div
-                    style={{
-                      display: "grid",
-                      gap: 20,
-                      gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-                    }}
-                  >
-                    {categories.map((c) => (
-                      <CategoryCard
-                        key={c.id}
-                        cat={c}
-                        itemCount={items.filter((i) => i.cat === c.key).length}
-                        onEdit={() => setEditingCat(c)}
-                        onDelete={() => deleteCategory(c)}
-                        onOpen={() => setViewingCat(c)}
-                        onImageUpdated={(url) => {
-                          setCategories((arr) => arr.map((x) => x.id === c.id ? { ...x, img: url } : x));
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
+                ) : (() => {
+                  const shown = categories.filter((c) => {
+                    if (catStatusFilter === "enabled" && !c.enabled) return false;
+                    if (catStatusFilter === "disabled" && c.enabled) return false;
+                    const q = catSearch.trim().toLowerCase();
+                    if (q && !(c.title?.toLowerCase().includes(q) || c.key?.toLowerCase().includes(q) || c.sub?.toLowerCase().includes(q))) return false;
+                    return true;
+                  });
+                  if (shown.length === 0) {
+                    return <div className="ma-empty-state">No categories match your filters.</div>;
+                  }
+                  return (
+                    <div
+                      style={{
+                        display: "grid",
+                        gap: 20,
+                        gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+                      }}
+                    >
+                      {shown.map((c) => (
+                        <CategoryCard
+                          key={c.id}
+                          cat={c}
+                          itemCount={items.filter((i) => i.cat === c.key).length}
+                          busy={!!busy[`cat-${c.id}`]}
+                          onEdit={() => setEditingCat(c)}
+                          onDelete={() => deleteCategory(c)}
+                          onOpen={() => setViewingCat(c)}
+                          onToggleEnabled={() => toggleCategoryEnabled(c)}
+                          onImageUpdated={(url) => {
+                            setCategories((arr) => arr.map((x) => x.id === c.id ? { ...x, img: url } : x));
+                          }}
+                        />
+                      ))}
+                    </div>
+                  );
+                })()}
               </div>
             </section>
           </>
