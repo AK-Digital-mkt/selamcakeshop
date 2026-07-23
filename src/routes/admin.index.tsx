@@ -972,6 +972,14 @@ function CategoryCard({
           <div style={{ display: "flex", gap: 8 }}>
             <button
               type="button"
+              onClick={onToggleEnabled}
+              disabled={busy}
+              title={cat.enabled ? "Disable category" : "Enable category"}
+              className={`ma-switch${cat.enabled ? " on" : ""}`}
+              style={{ opacity: busy ? 0.6 : 1 }}
+            />
+            <button
+              type="button"
               onClick={onEdit}
               title="Edit"
               style={{
