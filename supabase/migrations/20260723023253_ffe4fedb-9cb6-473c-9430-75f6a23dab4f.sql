@@ -1,0 +1,1 @@
+ALTER TABLE public.shop_categories ADD COLUMN IF NOT EXISTS enabled boolean NOT NULL DEFAULT true;

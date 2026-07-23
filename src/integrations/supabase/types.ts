@@ -177,6 +177,7 @@ export type Database = {
         Row: {
           badge: string
           created_at: string
+          enabled: boolean
           id: string
           img: string
           key: string
@@ -188,6 +189,7 @@ export type Database = {
         Insert: {
           badge?: string
           created_at?: string
+          enabled?: boolean
           id?: string
           img?: string
           key: string
@@ -199,6 +201,7 @@ export type Database = {
         Update: {
           badge?: string
           created_at?: string
+          enabled?: boolean
           id?: string
           img?: string
           key?: string
