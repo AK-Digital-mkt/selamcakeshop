@@ -119,6 +119,7 @@ export default function SweetBloom() {
     lines.push("🧁 Items:");
     cartItems.forEach(({ dish, qty }) => {
       lines.push(`• ${loc(dish, "name", lang)} × ${qty} — ETB ${dish.price * qty}`);
+      if (dish.img && /^https?:\/\//i.test(dish.img)) lines.push(`  🖼 ${dish.img}`);
     });
     lines.push("");
     lines.push(`💰 Total: ETB ${cartTotal}`);
