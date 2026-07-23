@@ -34,6 +34,7 @@ export const Route = createFileRoute("/")({
     const { data: catData } = await supabase
       .from("shop_categories" as any)
       .select("id,key,title,sub,badge,img,sort_order")
+      .eq("enabled", true)
       .order("sort_order", { ascending: true });
     return { cats: ((catData ?? []) as any[]) as Category[] };
   },
