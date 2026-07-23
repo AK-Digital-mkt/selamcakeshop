@@ -788,7 +788,7 @@ function AdminDashboard() {
         <ItemEditor
           initial={editing}
           existingIds={items.map(i => i.id)}
-          categories={categories.map((c) => ({ key: c.key, title: c.title }))}
+          categories={categories.filter((c) => c.enabled || c.key === editing?.cat).map((c) => ({ key: c.key, title: c.title }))}
           onClose={() => setEditing(null)}
           onSaved={() => { setEditing(null); loadItems(); }}
         />
