@@ -1427,6 +1427,7 @@ function CategoryEditor({ initial, existingKeys, onClose, onSaved }: {
     const payload = {
       key, title, sub: form.sub, badge: form.badge, img: form.img,
       sort_order: Number(form.sort_order) || 0,
+      enabled: form.enabled ?? true,
     };
     const { error } = isNew
       ? await supabase.from("shop_categories" as any).insert(payload)
