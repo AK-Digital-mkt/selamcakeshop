@@ -33,6 +33,7 @@ function buildCaption(order: PlaceOrderInput): string {
   lines.push("🧁 Items:");
   order.items.forEach((it) => {
     lines.push(`• ${it.name} × ${it.qty} — ETB ${it.price * it.qty}`);
+    if (it.img) lines.push(`  🖼 ${it.img}`);
   });
   lines.push("");
   lines.push(`💰 Total: ETB ${order.total}`);
