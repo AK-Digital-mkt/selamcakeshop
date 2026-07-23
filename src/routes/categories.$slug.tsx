@@ -332,7 +332,10 @@ function CheckoutModal({ entries, categoryId, categoryName, onClose, onSuccess }
     lines.push(phone.trim());
     lines.push("");
     lines.push("Products:");
-    entries.forEach((e) => lines.push(`• ${e.item.name} × ${e.qty}`));
+    entries.forEach((e) => {
+      lines.push(`• ${e.item.name} × ${e.qty}`);
+      if (e.item.img) lines.push(`  🖼 ${e.item.img}`);
+    });
     lines.push("");
     lines.push("Category:");
     lines.push(categoryName || "—");
