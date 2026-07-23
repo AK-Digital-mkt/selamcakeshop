@@ -548,7 +548,7 @@ function AdminDashboard() {
               <div className="ma-card-head" style={{ flexWrap: "wrap", gap: 10 }}>
                 <h2>Storefront categories ({categories.length})</h2>
                 <button className="ma-add-btn" type="button" onClick={() => setEditingCat({
-                  id: "", key: "", title: "", sub: "", badge: "", img: "", sort_order: (categories.at(-1)?.sort_order ?? 0) + 10,
+                  id: "", key: "", title: "", sub: "", badge: "", img: "", sort_order: (categories.at(-1)?.sort_order ?? 0) + 10, enabled: true,
                 })}>
                   <Plus size={16} style={{ marginRight: 4 }} /> New Category
                 </button>
