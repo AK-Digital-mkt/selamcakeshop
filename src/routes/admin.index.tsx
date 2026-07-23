@@ -948,7 +948,19 @@ function CategoryCard({
               <div style={{ fontSize: 12, color: "#7a8a82", marginTop: 3, lineHeight: 1.4 }}>{cat.sub}</div>
             )}
           </button>
-          <span className="ma-cat-tag" style={{ flexShrink: 0, fontSize: 11 }}>{itemCount}</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6, flexShrink: 0 }}>
+            <span className="ma-cat-tag" style={{ fontSize: 11 }}>{itemCount}</span>
+            <span
+              className="ma-order-status"
+              style={{
+                background: cat.enabled ? "#DCF4E8" : "#FBE0EA",
+                color: cat.enabled ? "#1F8A5B" : "#B04A6E",
+              }}
+              title={cat.enabled ? "Visible to customers" : "Hidden from customers"}
+            >
+              {cat.enabled ? "🟢 Enabled" : "🔴 Disabled"}
+            </span>
+          </div>
         </div>
 
         {uploadError && (
